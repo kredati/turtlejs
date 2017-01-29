@@ -1,57 +1,151 @@
 class Turtle {
 
-  constructor (x, y) {
+  constructor (x = 0, y = 0) {
     this.position = new p5.Vector(x, y)
-    this.triangle = new DirectionalTriangle(10)
+    this.triangle = new DirectionalTriangle(7)
     this.heading = radians(-90)
-    this.path = []
+
+    this.path = new Path()
+    this.path.addNode(this.position)
+
   }
 
   display () {
     background(0)
+    noStroke()
+
     this.triangle.render(this.position, this.heading)
+    this.path.render()
   }
 
-  forward (distance) {
-    let movement = new p5.Vector(distance)
-
-    movement.rotate(this.heading)
-
-    this.position = this.position.add(movement)
+  finishMove () {
+    // console.log(this.status())
 
     return this
   }
 
-  right (degrees) {
+  goTo (x = width/2, y = height/2) {
+    this.position = new p5.Vector(x, y)
+
+    return this.finishMove()
+  }
+
+  jump (distance = 0) {
+    let movement = new p5.Vector(distance).rotate(this.heading)
+
+    this.position = this.position.add(movement)
+
+    this.path.newSegment(this.position)
+
+    return this.finishMove()
+  }
+
+  forward (distance = 0) {
+    let movement = new p5.Vector(distance).rotate(this.heading)
+
+    this.position = this.position.add(movement)
+    this.path.addNode(this.position)
+
+    return this.finishMove()
+  }
+
+  right (degrees = 0) {
     let rotation = radians(degrees)
 
     this.heading += rotation
 
-    return this
+    return this.finishMove()
   }
 
-  left (degrees) {
+  left (degrees = 0) {
     let rotation = radians(degrees)
 
     this.heading -= rotation
 
-    return this
+    return this.finishMove()
   }
 
-  turn (degrees) {
+  turn (degrees = 0) {
     let rotation = radians(degrees)
 
     this.heading += rotation
 
-    return this
+    return this.finishMove()
   }
 
-  repeat (times, doIt) {
-    for (let i = 1; i < times; ++i) {
+  repeat (times = 0, doIt) {
+    for (let i = 0; i < times; ++i) {
       doIt()
     }
 
-    return this
+    return this.finishMove()
+  }
+
+  erase () {
+    this.path = new Path()
+    this.path.addNode(this.position)
+
+    return this.finishMove()
+  }
+
+  reset () {
+    this.position = new p5.Vector(width/2, height/2)
+    this.heading = radians(-90)
+
+    console.clear()
+
+    return this.erase()
+  }
+
+  status () {
+    let xPos = Math.round(this.position.x),
+      yPos = Math.round(this.position.y),
+      heading = Math.round(degrees(this.heading) + 90)
+
+    console.log(`Turtle is at (${xPos}, ${yPos}).`)
+    console.log(`Turtle is facing ${heading}.`)
+  }
+
+  help () {
+    console.log('Here is what you can tell me to do:')
+    let methodList = ''
+
+    for (let method in this.methods) {
+      if ({}.hasOwnProperty.call(this.methods, method)) {
+        if (methodList !== '') methodList = `${methodList}, `
+        methodList = `${methodList}${method}()`
+      }
+    }
+    methodList = `${methodList}.`
+    console.log(methodList)
+  }
+
+  exportMethods (bindTo) {
+    this.methods = {
+      'erase': this.erase,
+      'forward': this.forward,
+      'help': this.help,
+      'jump': this.jump,
+      'left': this.left,
+      'repeat': this.repeat,
+      'report': this.status,
+      'reset': this.reset,
+      'right': this.right,
+      'turn': this.turn
+    }
+
+    let exportMethods = {}
+
+    for (let method in this.methods) {
+      if ({}.hasOwnProperty.call(this.methods, method))
+        exportMethods[method] = this.methods[method].bind(this)
+    }
+
+    Object.assign(bindTo, exportMethods)
+  }
+
+  makeGlobal () {
+    this.exportMethods(window)
   }
 
 }
