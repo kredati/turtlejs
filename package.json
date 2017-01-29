@@ -1,0 +1,19 @@
+{
+  "name": "turtlejs",
+  "version": "0.0.1",
+  "description": "Deeply pedagogical turtle graphics in p5.js.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kredati/turtlejs.git"
+  },
+  "author": "Scott Richmond",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kredati/turtlejs/issues"
+  },
+  "homepage": "https://github.com/kredati/turtlejs#readme"
+}
