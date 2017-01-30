@@ -10,6 +10,4 @@ var setup = () => {
 var draw = () => {
   commandCenter.executeStack()
   turtle.display()
-
-  noLoop()
 }

@@ -55,8 +55,6 @@ class TurtleCommand {
     this.commandCenter = commandCenter
     this.commandChain = commandChain
     this.commandCenter.registerChain(this.commandChain)
-
-    loop()
   }
 
   buildMethod (command) {
