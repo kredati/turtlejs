@@ -52,12 +52,16 @@ class TurtleCommand {
     for (let i = 1; i < times; ++i) {
       commands.execute()
     }
+
+    return commands
   }
 
   static repeatFunction(times, toDo) {
-    for (let i = 0; i < times; ++i) {
+    for (let i = 0; i < times - 1; ++i) {
       toDo()
     }
+
+    return toDo()
   }
 
 }
