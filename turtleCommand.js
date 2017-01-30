@@ -19,13 +19,10 @@ class TurtleCommandCenter {
     if (!this.stack.includes(commandChain)) this.stack.push(commandChain)
   }
 
-  replaceChain (oldChain, newChain) {
-    if (!this.stack.includes(oldChain))
-      throw new Error('I cannot replace a chain I do not have.')
+  deregisterChain(commandChain) {
+    let chainIndex = this.stack.indexOf(commandChain)
 
-    let chainAt = this.stack.indexOf(oldChain)
-
-    this.stack[chainAt] = newChain
+    this.stack[chainIndex] = []
   }
 
   exportGlobals () {
@@ -58,6 +55,8 @@ class TurtleCommand {
     this.commandCenter = commandCenter
     this.commandChain = commandChain
     this.commandCenter.registerChain(this.commandChain)
+
+    loop()
   }
 
   buildMethod (command) {
@@ -84,7 +83,7 @@ class TurtleCommand {
 
     this.commandChain.push(this)
 
-    return new TurtleCommand(this.commandCenter, [])
+    return new TurtleCommand(this.commandCenter, this.commandChain)
   }
 
   repeatCommands (times, command) {
@@ -93,13 +92,20 @@ class TurtleCommand {
 
     for (let i = 0; i < times; ++i) repeater = repeater.concat(commandChain)
 
-    this.toExecute = () => repeater.forEach(line => line.execute())
+    this.commandCenter.deregisterChain(commandChain)
+
+    this.toExecute = () => {
+      let localCommandCenter = new TurtleCommandCenter(this.turtle)
+
+      localCommandCenter.registerChain(repeater)
+      localCommandCenter.executeStack()
+
+      this.commandCenter.exportGlobals()
+    }
   }
 
   repeatFunction(times, toDo) {
     this.toExecute = () => {
-      console.log(`Executing repeat of ${toDo}, ${times} times.`)
-
       let localCommandCenter = new TurtleCommandCenter(this.turtle)
 
       for (let i = 0; i < times; ++i) toDo()
