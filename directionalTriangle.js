@@ -1,10 +1,24 @@
 // Draws a triangle of specified size, pointing in the specified heading
-// Factors out the complexity of drawing Boids
+// Adapted freely from Dan Shiffman's flocking/boids from The Nature of Code
 class DirectionalTriangle {
 
   constructor (radius) {
     this.radius = radius
-    this.fillColor = color(255, 255, 255, 100)
+    this.fillColor = color(150, 150, 150, 200)
+
+    this.buildTriangle()
+  }
+
+  buildTriangle () {
+    let vertices = [],
+      triAngle = radians(140),
+      radius = this.radius
+
+    vertices.push(new p5.Vector(radius, 0))
+    vertices.push(new p5.Vector(radius, 0).rotate(triAngle))
+    vertices.push(new p5.Vector(radius, 0).rotate(-triAngle))
+
+    this.vertices = vertices
   }
 
   render (position, heading) {
@@ -20,9 +34,7 @@ class DirectionalTriangle {
 
   drawTriangle () {
     beginShape()
-      vertex(this.radius * 1.5, 0)
-      vertex(-this.radius * 1.5, this.radius)
-      vertex(-this.radius * 1.5, -this.radius)
+    this.vertices.forEach(vertice => vertex(vertice.x, vertice.y))
     endShape(CLOSE)
   }
 

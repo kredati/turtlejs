@@ -2,7 +2,7 @@ class Turtle {
 
   constructor (x = 0, y = 0) {
     this.position = new p5.Vector(x, y)
-    this.triangle = new DirectionalTriangle(7)
+    this.triangle = new DirectionalTriangle(15)
     this.heading = radians(-90)
 
     this.path = new Path()
@@ -14,8 +14,8 @@ class Turtle {
     background(0)
     noStroke()
 
-    this.triangle.render(this.position, this.heading)
     this.path.render()
+    this.triangle.render(this.position, this.heading)
   }
 
   finishMove () {
