@@ -190,7 +190,7 @@ module.exports = {
         "no-unneeded-ternary": "error",
         "no-unused-expressions": "off",
         "no-unused-vars": "off",
-        "no-use-before-define": "error",
+        "no-use-before-define": ["error", {'classes': false}],
         "no-useless-call": "error",
         "no-useless-computed-key": "error",
         "no-useless-concat": "error",

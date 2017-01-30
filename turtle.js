@@ -62,25 +62,17 @@ class Turtle {
   }
 
   right (degrees = 0) {
-    let rotation = radians(degrees)
-
-    this.heading += rotation
-
-    return this.finishMove()
+    return this.turn(degrees)
   }
 
   left (degrees = 0) {
-    let rotation = radians(degrees)
-
-    this.heading -= rotation
-
-    return this.finishMove()
+    return this.turn(degrees * -1)
   }
 
-  turn (degrees = 0) {
-    let rotation = radians(degrees)
+  turn (rotation = 0) {
+    let headingInDegrees = degrees(this.heading)
 
-    this.heading += rotation
+    this.heading = radians((headingInDegrees + rotation) % 360)
 
     return this.finishMove()
   }
