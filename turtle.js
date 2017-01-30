@@ -8,6 +8,18 @@ class Turtle {
     this.path = new Path()
     this.path.addNode(this.position)
 
+    this.methods = {
+      'erase': this.erase,
+      'forward': this.forward,
+      'help': this.help,
+      'jump': this.jump,
+      'left': this.left,
+      // 'repeat': this.repeat,
+      'report': this.status,
+      'reset': this.reset,
+      'right': this.right,
+      'turn': this.turn
+    }
   }
 
   display () {
@@ -121,19 +133,6 @@ class Turtle {
   }
 
   exportMethods (bindTo) {
-    this.methods = {
-      'erase': this.erase,
-      'forward': this.forward,
-      'help': this.help,
-      'jump': this.jump,
-      'left': this.left,
-      'repeat': this.repeat,
-      'report': this.status,
-      'reset': this.reset,
-      'right': this.right,
-      'turn': this.turn
-    }
-
     let exportMethods = {}
 
     for (let method in this.methods) {
@@ -142,6 +141,8 @@ class Turtle {
     }
 
     Object.assign(bindTo, exportMethods)
+
+    return bindTo
   }
 
   makeGlobal () {
