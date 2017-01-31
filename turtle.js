@@ -1,9 +1,13 @@
 class Turtle {
 
   constructor (x = 0, y = 0) {
-    this.position = new p5.Vector(x, y)
+    this.origin = new p5.Vector(x, y)
+    this.originalHeading = radians(-90)
+
+    this.position = this.origin.copy()
+    this.heading = this.originalHeading
+
     this.triangle = new DirectionalTriangle(15)
-    this.heading = radians(-90)
 
     this.path = new Path()
     this.path.addNode(this.position)
@@ -12,9 +16,9 @@ class Turtle {
       'erase': this.erase,
       'forward': this.forward,
       'help': this.help,
+      'home': this.home,
       'jump': this.jump,
       'left': this.left,
-      // 'repeat': this.repeat,
       'report': this.status,
       'reset': this.reset,
       'right': this.right,
@@ -23,23 +27,8 @@ class Turtle {
   }
 
   display () {
-    background(0)
-    noStroke()
-
     this.path.render()
     this.triangle.render(this.position, this.heading)
-  }
-
-  finishMove () {
-    // console.log(this.status())
-
-    return this
-  }
-
-  goTo (x = width/2, y = height/2) {
-    this.position = new p5.Vector(x, y)
-
-    return this.finishMove()
   }
 
   jump (distance = 0) {
@@ -49,7 +38,7 @@ class Turtle {
 
     this.path.newSegment(this.position)
 
-    return this.finishMove()
+    return this
   }
 
   forward (distance = 0) {
@@ -58,7 +47,7 @@ class Turtle {
     this.position = this.position.add(movement)
     this.path.addNode(this.position)
 
-    return this.finishMove()
+    return this
   }
 
   right (degrees = 0) {
@@ -74,31 +63,29 @@ class Turtle {
 
     this.heading = radians((headingInDegrees + rotation) % 360)
 
-    return this.finishMove()
-  }
-
-  repeat (times = 0, doIt) {
-    for (let i = 0; i < times; ++i) {
-      doIt()
-    }
-
-    return this.finishMove()
+    return this
   }
 
   erase () {
     this.path = new Path()
     this.path.addNode(this.position)
 
-    return this.finishMove()
+    return this
   }
 
   reset () {
-    this.position = new p5.Vector(width/2, height/2)
-    this.heading = radians(-90)
+    this.home()
 
     console.clear()
 
     return this.erase()
+  }
+
+  home () {
+    this.position = this.origin.copy()
+    this.heading = this.originalHeading
+
+    return this
   }
 
   status () {
@@ -135,10 +122,6 @@ class Turtle {
     Object.assign(bindTo, exportMethods)
 
     return bindTo
-  }
-
-  makeGlobal () {
-    this.exportMethods(window)
   }
 
 }

@@ -1,13 +1,11 @@
-var turtle,
-  commandCenter
+var commandCenter
 
 var setup = () => {
   createCanvas(600, 500)
-  turtle = new Turtle(width/2, height/2)
-  commandCenter = new TurtleCommandCenter(turtle)
+  commandCenter = new TurtleCommandCenter()
 }
 
 var draw = () => {
+  background(0)
   commandCenter.executeStack()
-  turtle.display()
 }

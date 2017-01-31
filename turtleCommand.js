@@ -1,6 +1,6 @@
 class TurtleCommandCenter {
 
-  constructor (turtle) {
+  constructor (turtle = new Turtle(width/2, height/2)) {
     this.turtle = turtle
     this.stack = []
 
@@ -11,6 +11,8 @@ class TurtleCommandCenter {
     this.stack.forEach(chain => {
       chain.forEach(command => { command.execute() })
     })
+
+    this.turtle.display()
 
     this.stack = []
   }
