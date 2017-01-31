@@ -2,7 +2,7 @@
 let p5Globals = require('./.p5.globals.js')
 
 // Make sure to add globals to index.html as well
-// Globals changed flag: *
+// Globals changed flag: **
 let myGlobals = require('./.globals.js')
 
 Object.assign(myGlobals, p5Globals)
@@ -190,7 +190,7 @@ module.exports = {
         "no-unneeded-ternary": "error",
         "no-unused-expressions": "off",
         "no-unused-vars": "off",
-        "no-use-before-define": "error",
+        "no-use-before-define": ["error", {'classes': false}],
         "no-useless-call": "error",
         "no-useless-computed-key": "error",
         "no-useless-concat": "error",
