@@ -2,19 +2,32 @@ class TurtleCommandCenter {
 
   constructor (turtle = new Turtle(width/2, height/2)) {
     this.turtle = turtle
+
+    this.renderTurtle()
+
     this.stack = []
 
     this.exportGlobals()
   }
 
-  executeStack () {
-    this.stack.forEach(chain => {
-      chain.forEach(command => { command.execute() })
-    })
+  executeStack (parent) {
+    if (this.stack.length) {
+      if (!parent) console.log('Command received! Thank you for letting me work on this.')
 
-    this.turtle.display()
+      this.stack.forEach(chain => {
+        chain.forEach(command => { command.execute() })
+      })
 
-    this.stack = []
+      if (!parent) this.renderTurtle()
+
+      this.stack = []
+
+      if (!parent) console.log('Turtle ready.')
+    }
+  }
+
+  renderTurtle () {
+    this.turtle.render()
   }
 
   registerChain (commandChain) {
@@ -98,7 +111,7 @@ class TurtleCommand {
       let localCommandCenter = new TurtleCommandCenter(this.turtle)
 
       localCommandCenter.registerChain(repeater)
-      localCommandCenter.executeStack()
+      localCommandCenter.executeStack(this)
 
       this.commandCenter.exportGlobals()
     }
@@ -110,7 +123,7 @@ class TurtleCommand {
 
       for (let i = 0; i < times; ++i) toDo()
 
-      localCommandCenter.executeStack()
+      localCommandCenter.executeStack(this)
 
       this.commandCenter.exportGlobals()
     }

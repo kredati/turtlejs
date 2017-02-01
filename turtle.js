@@ -13,6 +13,7 @@ class Turtle {
     this.path.addNode(this.position)
 
     this.methods = {
+      'back': this.back,
       'erase': this.erase,
       'forward': this.forward,
       'help': this.help,
@@ -26,7 +27,8 @@ class Turtle {
     }
   }
 
-  display () {
+  render () {
+    background(0)
     this.path.render()
     this.triangle.render(this.position, this.heading)
   }
@@ -35,7 +37,6 @@ class Turtle {
     let movement = new p5.Vector(distance).rotate(this.heading)
 
     this.position = this.position.add(movement)
-
     this.path.newSegment(this.position)
 
     return this
@@ -46,6 +47,19 @@ class Turtle {
 
     this.position = this.position.add(movement)
     this.path.addNode(this.position)
+
+    return this
+  }
+
+  back (distance = 0) {
+    return this.forward(distance * -1)
+  }
+
+  home () {
+    this.position = this.origin.copy()
+    this.heading = this.originalHeading
+
+    this.path.newSegment(this.position)
 
     return this
   }
@@ -77,15 +91,9 @@ class Turtle {
     this.home()
 
     console.clear()
+    background(0)
 
     return this.erase()
-  }
-
-  home () {
-    this.position = this.origin.copy()
-    this.heading = this.originalHeading
-
-    return this
   }
 
   status () {

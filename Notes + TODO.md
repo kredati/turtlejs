@@ -18,3 +18,21 @@
 -   [ ] Think about implementation details: Is there a way to decouple the command and the command center? Is there a way to write the turtle more functionally? Abstract graphics rendering? Is p5.js necessarily super stateful and therefore sadly imperative? Is there a way of writing pure graphics rendering functions?
 -   [ ] What other kinds of turtles can we write? (E.g., can I write symmetrical turtles easily? What about Dynaturtles? What are Dynaturtles?)
 -   [ ] How do we move from turtle graphics to p5.js? (Or, in other words, from polar to cartesian coordinates--we learn this undoes the syntonic reasoning and is a step up in abstraction)
+-   [x] Refactor rendering so that only new lines are rendered (NOT DONE: the way p5.js renders, to draw the turtle in a new place or orientation, you have to call background(), which means you have to redraw all the lines. p5 apparently checks to see if we're drawing things that are already there, so it doesn't actually cost *that* much to redraw on refreshes—and yet, many repeated repeats are very slow indeed, and sometimes break the Javascript)
+-   [ ] Nevertheless, it's time to refactor for speed—do it! Nested repeats are a disaster. 
+-   [x] Add a few monkeypatched helper functions, especially times() on number? Or perhaps as a function n.times(do) or times(n, do). (DONE: thank you StackOverflow for guiding me to this particular answer quickly.)
+
+### "Microworlds"
+*   "Original" LOGO: typing unadorned commands into the console (major concepts: giving directions, passing parameters, variables, building functions, the power of repetition)
+*   oo-turtles: giving the turtle instructions directly (learn more about dot notation; teach the turtle a new thing: use `this`); (the change: expose turtle object)
+*   Interaction turtles: develop KeyListener to give the turtle more specific interaction (can you make the turtle do funny things?) (the change: a KeyListener; also: introduce conditionals?—perhaps bound the turtle to the screen?)
+*   Cartesian turtles: different turtle geometry means a different set of commands (do this with interaction first? arrow keys make turtle move in four directions)
+*   Vector turtles: use p5.Vector objects to represent position, and also heading (introduce basic vector math); manipulate position (with interaction, with commands) on x and y and with vector math add(), sub(), etc.
+*   Velocity turtles: introduce animation—velocity can be manipulated using both console commands and KeyListeners: yet another kind of abstraction
+*   Acceleration turtles: introduce acceleration using interaction? (Asteroid spaceship—this is already force, but we don't know it yet)
+*   Newtonian turtles: here there are a bunch of different possibilities: gravity turtles, rocket turtles, wind turtles—what ways do we have of applying forces to turtles (or other objects)
+
+More research here—let's dig back in the archive to find interesting lessons and implement them ourselves.
+
+### Sketching
+After LOGO's various "microworlds," it seems like it's time to start thinking about using p5.js. Rerun the a curriculum very similar to ENG 7006's [coding lessons](https://github.com/ENG7006/coding-lessons). (This is largely written under the influence of Dan Shiffman's p5.js videos on YouTube, which are great.) One thing I learn from going back to those lessons is just how much ground we'll have to cover, and how difficult it is to cover it. Revising this curriculum is going to be painstaking.
