@@ -12,7 +12,8 @@ class TurtleCommandCenter {
 
   executeStack (parent) {
     if (this.stack.length) {
-      if (!parent) console.log('Command received! Thank you for letting me work on this.')
+      if (!parent)
+        console.log('Command received! Thank you for letting me work on this.')
 
       this.stack.forEach(chain => {
         chain.forEach(command => { command.execute() })

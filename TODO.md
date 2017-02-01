@@ -19,7 +19,7 @@
 -   [ ] What other kinds of turtles can we write? (E.g., can I write symmetrical turtles easily? What about Dynaturtles? What are Dynaturtles?)
 -   [ ] How do we move from turtle graphics to p5.js? (Or, in other words, from polar to cartesian coordinates--we learn this undoes the syntonic reasoning and is a step up in abstraction)
 -   [x] Refactor rendering so that only new lines are rendered (NOT DONE: the way p5.js renders, to draw the turtle in a new place or orientation, you have to call background(), which means you have to redraw all the lines. p5 apparently checks to see if we're drawing things that are already there, so it doesn't actually cost *that* much to redraw on refreshes—and yet, many repeated repeats are very slow indeed, and sometimes break the Javascript)
--   [ ] Nevertheless, it's time to refactor for speed—do it! Nested repeats are a disaster. 
+-   [ ] Nevertheless, it's time to refactor for speed—do it! Nested repeats are a disaster. (DONE a little bit: executeStack() only calls turtle.render() if it's from the top level TurtleCommandCenter. It's still painfully slow, though.)
 -   [x] Add a few monkeypatched helper functions, especially times() on number? Or perhaps as a function n.times(do) or times(n, do). (DONE: thank you StackOverflow for guiding me to this particular answer quickly.)
 
 ### "Microworlds"

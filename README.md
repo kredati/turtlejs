@@ -1,6 +1,6 @@
 TurtleJS is turtle graphics for learning coding in a humanities context, implemented in Javascript with [p5.js](http://p5js.org), being developed (and very much in progress) by Scott Richmond at the University of Toronto.
 
-What follows now is a statement of purpose. More practical documents are forthcoming.
+What follows now is a part of a draft of a statement of purpose; speculative reasoning about the practical matters of TurtleJS and how it works pedagogically are in TODO. More practical documents are forthcoming.
 
 # Turtle pedagogy
 Once upon a time, a few decades ago, LOGO and its famous "turtle graphics" was the way kids (old and young) learned how to program computers. Generations of kids learned to make a square by typing ```REPEAT 4 [ FORWARD 100 RIGHT 90 ]```. (I did this myself once or twice, but already in the early 1990s, we were engaged in [dumbing down learning with computers](http://stager.tv/blog/?p=2691). What I really remember is [Oregon Trail](https://socialmediaweek.org/blog/2015/04/oregon-trail-generation/).) LOGO was and remains hugely influential in how we teach computer programming, from the use of Lisps in teaching coding (e.g. Scheme and Racket) to the make-pretty-pictures-fast ethic of [Processing](http://processing.org) to the "easy" and "friendly" graphical interface of [Scratch](https://scratch.mit.edu/).
