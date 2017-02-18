@@ -23,7 +23,7 @@ class TurtleCommandCenter {
 
       this.stack = []
 
-      if (!parent) console.log('Turtle ready.')
+      if (!parent) console.log('I\'m done! Ready for your next instruction.')
     }
   }
 
