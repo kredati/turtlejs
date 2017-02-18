@@ -46,4 +46,5 @@ A few notes after looking at Pencil Code:
 -   [ ] Pencil Code allows the Turtle to do things *other* than draw lines: it will draw circles and boxes and so on. This will be a nice transition from turtle graphics to cartesian graphics?
 -   [ ] Help files should be reasonably implemented in JS itself. A JSON file (or several) that contain information on usage
 -   [ ] Research: Are there automatic parsers that can tell me about arguments? (This is getting close to TypeScript; but I want tools that let me introspect plain JS functions.)
--   [ ] 
+-   [ ] In addition to custom help, we will also need *custom error messages*.
+-   [ ] As a riff on the above: calling help() or some such after an error will provide a friendlier explanation of that error

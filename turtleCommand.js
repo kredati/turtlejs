@@ -3,8 +3,6 @@ class TurtleCommandCenter {
   constructor (turtle = new Turtle(width/2, height/2)) {
     this.turtle = turtle
 
-    this.renderTurtle()
-
     this.stack = []
 
     this.exportGlobals()
@@ -12,23 +10,18 @@ class TurtleCommandCenter {
 
   executeStack (parent) {
     if (this.stack.length) {
-      if (!parent)
-        console.log('Command received! Thank you for letting me work on this.')
+      console.log('Command received! Thank you for letting me work on this.')
 
       this.stack.forEach(chain => {
         chain.forEach(command => { command.execute() })
       })
 
-      if (!parent) this.renderTurtle()
+      this.turtle.render()
 
       this.stack = []
 
-      if (!parent) console.log('I\'m done! Ready for your next instruction.')
+      console.log('I\'m done! Ready for your next instruction.')
     }
-  }
-
-  renderTurtle () {
-    this.turtle.render()
   }
 
   registerChain (commandChain) {
@@ -37,6 +30,9 @@ class TurtleCommandCenter {
 
   deregisterChain(commandChain) {
     let chainIndex = this.stack.indexOf(commandChain)
+
+    if (chainIndex < 0)
+      throw new Error('I cannot deregister something I don\'t know about.')
 
     this.stack[chainIndex] = []
   }
@@ -52,6 +48,20 @@ class TurtleCommandCenter {
 
     window.repeat = (times, commands) =>
       new TurtleCommand(this, []).repeat(times, commands)
+  }
+
+}
+
+class TurtleSubcommandCenter extends TurtleCommandCenter {
+
+  constructor(...args) {
+    super(args)
+  }
+
+  executeStack (parent) {
+    this.stack.forEach(chain => {
+      chain.forEach(command => { command.execute() })
+    })
   }
 
 }
@@ -83,17 +93,18 @@ class TurtleCommand {
   }
 
   execute () {
-    this.toExecute()
+    if (this.toExecute()) undoStack.push(this)
 
     return this
   }
 
-  repeat (times, toDo) {
-    if (toDo instanceof Function) this.repeatFunction(times, toDo)
+  repeat (times, commands) {
 
-    else if (toDo instanceof TurtleCommand) this.repeatCommands(times, toDo)
+    if (commands instanceof TurtleCommand) this.repeatCommands(times, commands)
 
-    else throw new Error('I can only repeat commands or functions.')
+    else throw new Error(
+      `I can only repeat commands. You gave me a(n) ${typeof toDo}.`
+    )
 
     this.commandChain.push(this)
 
@@ -104,27 +115,15 @@ class TurtleCommand {
     let repeater = [],
       commandChain = command.commandChain
 
-    for (let i = 0; i < times; ++i) repeater = repeater.concat(commandChain)
+    times.times(() => { repeater = repeater.concat(commandChain) })
 
     this.commandCenter.deregisterChain(commandChain)
 
     this.toExecute = () => {
-      let localCommandCenter = new TurtleCommandCenter(this.turtle)
+      let localCommandCenter = new TurtleSubcommandCenter(this.turtle)
 
       localCommandCenter.registerChain(repeater)
-      localCommandCenter.executeStack(this)
-
-      this.commandCenter.exportGlobals()
-    }
-  }
-
-  repeatFunction(times, toDo) {
-    this.toExecute = () => {
-      let localCommandCenter = new TurtleCommandCenter(this.turtle)
-
-      for (let i = 0; i < times; ++i) toDo()
-
-      localCommandCenter.executeStack(this)
+      localCommandCenter.executeStack()
 
       this.commandCenter.exportGlobals()
     }
