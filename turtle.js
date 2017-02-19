@@ -30,6 +30,8 @@ class Turtle {
     background(0)
     this.path.render()
     this.triangle.render(this.position, this.heading)
+
+    console.log('Turtle ready!')
   }
 
   jump (distance = 0) {

@@ -16,18 +16,18 @@ class TurtleCommandCenter {
 
   executeStack (parent) {
     if (this.stack.length) {
-      console.log('Command received! Thank you for letting me work on this.')
+      // console.log('Command received! Thank you for letting me work on this.')
 
       this.stack.forEach(chain => {
         chain.forEach(command => { command.execute() })
       })
 
-      this.turtle.render()
-
       this.stack = []
       this.redoStack = []
 
-      console.log('I\'m done! Ready for your next instruction.')
+      this.turtle.render()
+
+      // console.log('I\'m done! Ready for your next instruction.')
     }
   }
 
@@ -72,7 +72,8 @@ class TurtleCommandCenter {
     this.resetStacks()
 
     console.clear()
-    // TurtleCommandCenter.ready()
+
+    console.log('Reset and ready!')
   }
 
   undo (steps = 1) {
@@ -120,7 +121,7 @@ class TurtleCommandCenter {
 
     if (typeof name !== 'string')
       throw new Error(
-        `Names of learned commands must be strings. You gave me a(n) ${typeof name}`
+        `Names of learned commands must be strings. You gave me a(n) ${typeof name}.`
       )
 
     this.learned[name] = command.commandChain
