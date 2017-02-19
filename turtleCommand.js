@@ -9,7 +9,7 @@ class TurtleCommandCenter {
 
     this.learned = {}
 
-    this.exportGlobals()
+    // this.exportGlobals()
 
     // TurtleCommandCenter.ready()
   }
@@ -142,12 +142,16 @@ class TurtleSubcommandCenter extends TurtleCommandCenter {
   constructor(...args) {
     super(args)
     this.undoStack = args.last()
+
+    this.relinquishGlobals = language.borrowGlobalContext(this)
   }
 
   executeStack (parent) {
     this.stack.forEach(chain => {
       chain.forEach(command => { command.execute() })
     })
+
+    this.relinquishGlobals()
   }
 
 }
@@ -156,7 +160,8 @@ class TurtleCommand {
 
   constructor (commandCenter, commandChain = []) {
     this.turtle = commandCenter.turtle
-    this.turtleMethods = this.turtle.exportMethods({})
+
+    this.turtleMethods = language.getTurtleMethods(commandCenter)
 
     for (let method in this.turtleMethods) {
       if ({}.hasOwnProperty.call(this.turtleMethods, method))
@@ -209,8 +214,6 @@ class TurtleCommand {
 
       localCommandCenter.registerChain(repeater)
       localCommandCenter.executeStack()
-
-      this.commandCenter.exportGlobals()
     }
   }
 

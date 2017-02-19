@@ -230,7 +230,7 @@ module.exports = {
         "semi": "off",
         "semi-spacing": "error",
         "sort-imports": "error",
-        "sort-keys": "error",
+        "sort-keys": "off",
         "sort-vars": "off",
         "space-before-blocks": "error",
         "space-before-function-paren": "off",
