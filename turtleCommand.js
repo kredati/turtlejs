@@ -4,8 +4,12 @@ class TurtleCommandCenter {
     this.turtle = turtle
 
     this.stack = []
+    this.undoStack = []
+    this.redoStack = []
 
     this.exportGlobals()
+
+    TurtleCommandCenter.ready()
   }
 
   executeStack (parent) {
@@ -19,6 +23,7 @@ class TurtleCommandCenter {
       this.turtle.render()
 
       this.stack = []
+      this.redoStack = []
 
       console.log('I\'m done! Ready for your next instruction.')
     }
@@ -48,6 +53,59 @@ class TurtleCommandCenter {
 
     window.repeat = (times, commands) =>
       new TurtleCommand(this, []).repeat(times, commands)
+
+    window.undo = this.undo.bind(this)
+    window.redo = this.redo.bind(this)
+
+    window.reset = () => {
+      this.turtle.reset()
+      this.turtle.render()
+
+      this.reset()
+
+      console.clear()
+      TurtleCommandCenter.ready()
+    }
+
+  }
+
+  undo (steps = 1) {
+    let stackLength = this.undoStack.length,
+      stack = this.undoStack.slice(0, stackLength - steps)
+
+    let undone = this.undoStack.slice(stackLength - steps, stackLength)
+
+    this.redoStack = undone.concat(this.redoStack)
+    this.undoStack = stack
+
+    this.turtle.erase()
+    this.turtle.home()
+    this.undoStack.forEach(command => command.toExecute())
+    this.turtle.render()
+  }
+
+  redo (steps = 1) {
+    let stepsToRedo = steps > this.redoStack.length
+      ? this.redoStack.length
+      : steps
+
+    let stack = this.redoStack.slice(0, steps)
+
+    this.redoStack = this.redoStack.slice(steps, length)
+
+    stack.forEach(command => command.toExecute())
+
+    this.undoStack = this.undoStack.concat(stack)
+    this.turtle.render()
+  }
+
+  reset () {
+    this.undoStack = []
+    this.redoStack = []
+  }
+
+  static ready() {
+    console.log('Turtle ready!')
   }
 
 }
@@ -56,6 +114,7 @@ class TurtleSubcommandCenter extends TurtleCommandCenter {
 
   constructor(...args) {
     super(args)
+    this.undoStack = args.last()
   }
 
   executeStack (parent) {
@@ -72,7 +131,6 @@ class TurtleCommand {
     this.turtle = commandCenter.turtle
     this.turtleMethods = this.turtle.exportMethods({})
 
-    this.methods = {}
     for (let method in this.turtleMethods) {
       if ({}.hasOwnProperty.call(this.turtleMethods, method))
         this[method] = this.buildMethod(method)
@@ -93,7 +151,7 @@ class TurtleCommand {
   }
 
   execute () {
-    if (this.toExecute()) undoStack.push(this)
+    if (this.toExecute()) this.commandCenter.undoStack.push(this)
 
     return this
   }

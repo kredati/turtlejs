@@ -30,3 +30,5 @@ var functionalTimes = function(times, callback) {
 }
 
 Object.assign(window, {'times': functionalTimes})
+
+Array.prototype.last = function() { return this[this.length - 1] }

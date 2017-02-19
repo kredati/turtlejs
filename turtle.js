@@ -21,7 +21,6 @@ class Turtle {
       'jump': this.jump,
       'left': this.left,
       'report': this.status,
-      'reset': this.reset,
       'right': this.right,
       'turn': this.turn
     }
@@ -90,7 +89,6 @@ class Turtle {
   reset () {
     this.home()
 
-    console.clear()
     background(0)
 
     return this.erase()
