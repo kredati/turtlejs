@@ -20,7 +20,7 @@ class Turtle {
       'home': this.home,
       'jump': this.jump,
       'left': this.left,
-      'report': this.status,
+      'report': this.report,
       'right': this.right,
       'turn': this.turn
     }
@@ -96,10 +96,12 @@ class Turtle {
     return this.erase()
   }
 
-  status () {
+  report () {
     let xPos = Math.round(this.position.x),
       yPos = Math.round(this.position.y),
       heading = Math.round(degrees(this.heading) + 90)
+
+    if (heading < 0) heading += 360
 
     console.log(`Turtle is at (${xPos}, ${yPos}).`)
     console.log(`Turtle is facing ${heading}.`)
