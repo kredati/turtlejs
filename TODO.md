@@ -4,7 +4,7 @@
 
 ### Additional thoughts:
 *   Metaprogramming like this always makes me feel a little queasy, although OMG did it make writing a DSL that is a subset of Javascript nearly trivial (although man is it hard to reason about nested calls)
--   [ ] Implement undo()! (Do this by, instead of erasing stack when called, save the stack.) This will mean reset() will have to be an explicit, separate binding on window (like repeat--as, of course, will undo).
+-   [x] Implement undo()! (Do this by, instead of erasing stack when called, save the stack.) This will mean reset() will have to be an explicit, separate binding on window (like repeat--as, of course, will undo).
 -   [x] Implement origin() on turtle, which will reset the turtle's position (DONE: as home()--p5 uses origin)
 -   [ ] Implement help--move help away from the turtle and to the command center. This might be the beginning of pedagogical documentation.
 -   [ ] Refactor command center global export--make the hard-coding (unavoidable here without something like typescript) much friendlier.
@@ -16,6 +16,9 @@
 -   [ ] Using the console, how do we save our work? Do input and output? This, I think, makes very good sense indeed using something like CodePen. (NOT using console, but instead using a file.)
 -   [ ] Test whether using a plain .js file works. (It absolutely should, but just in case.)
 -   [ ] Think about implementation details: Is there a way to decouple the command and the command center? Is there a way to write the turtle more functionally? Abstract graphics rendering? Is p5.js necessarily super stateful and therefore sadly imperative? Is there a way of writing pure graphics rendering functions?
+
+(To which I can only say: turtle graphics logic is poised in between receiving commands from users and drawing graphics: these are both inherently stateful. I don't suspect there's a more )
+
 -   [ ] What other kinds of turtles can we write? (E.g., can I write symmetrical turtles easily? What about Dynaturtles? What are Dynaturtles?)
 -   [ ] How do we move from turtle graphics to p5.js? (Or, in other words, from polar to cartesian coordinates--we learn this undoes the syntonic reasoning and is a step up in abstraction)
 -   [x] Refactor rendering so that only new lines are rendered (NOT DONE: the way p5.js renders, to draw the turtle in a new place or orientation, you have to call background(), which means you have to redraw all the lines. p5 apparently checks to see if we're drawing things that are already there, so it doesn't actually cost *that* much to redraw on refreshes—and yet, many repeated repeats are very slow indeed, and sometimes break the Javascript)

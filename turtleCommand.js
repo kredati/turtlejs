@@ -7,9 +7,11 @@ class TurtleCommandCenter {
     this.undoStack = []
     this.redoStack = []
 
+    this.learned = {}
+
     this.exportGlobals()
 
-    TurtleCommandCenter.ready()
+    // TurtleCommandCenter.ready()
   }
 
   executeStack (parent) {
@@ -57,16 +59,20 @@ class TurtleCommandCenter {
     window.undo = this.undo.bind(this)
     window.redo = this.redo.bind(this)
 
-    window.reset = () => {
-      this.turtle.reset()
-      this.turtle.render()
+    window.learn = this.learn.bind(this)
 
-      this.reset()
+    window.reset = this.reset.bind(this)
 
-      console.clear()
-      TurtleCommandCenter.ready()
-    }
+  }
 
+  reset () {
+    this.turtle.reset()
+    this.turtle.render()
+
+    this.resetStacks()
+
+    console.clear()
+    // TurtleCommandCenter.ready()
   }
 
   undo (steps = 1) {
@@ -99,13 +105,33 @@ class TurtleCommandCenter {
     this.turtle.render()
   }
 
-  reset () {
+  resetStacks () {
     this.undoStack = []
     this.redoStack = []
   }
 
-  static ready() {
-    console.log('Turtle ready!')
+  learn (name, command) {
+    let getsCommand = command instanceof TurtleCommand
+
+    if (!getsCommand)
+      throw new Error(`I can only learn commands.`)
+
+    this.deregisterChain(command.commandChain)
+
+    if (typeof name !== 'string')
+      throw new Error(
+        `Names of learned commands must be strings. You gave me a(n) ${typeof name}`
+      )
+
+    this.learned[name] = command.commandChain
+
+    window[name] = () => {
+      let chain = this.learned[name].slice(0)
+
+      this.registerChain(chain)
+
+      return new TurtleCommand(this, chain)
+    }
   }
 
 }
