@@ -10,7 +10,7 @@ class TurtleCommandCenter {
     this.learned = {}
   }
 
-  executeStack (parent) {
+  executeStack () {
     if (this.stack.length) {
 
       this.stack.forEach(chain => {
@@ -22,6 +22,7 @@ class TurtleCommandCenter {
 
       this.turtle.render()
 
+      console.log('Turtle ready!')
     }
   }
 
@@ -41,7 +42,9 @@ class TurtleCommandCenter {
   reset () {
     this.resetStacks()
 
+    this.turtle.reset().render()
 
+    console.clear()
     console.log('Reset and ready!')
   }
 
@@ -54,6 +57,7 @@ class TurtleCommandCenter {
     this.redoStack = undone.concat(this.redoStack)
     this.undoStack = stack
 
+    this.turtle.erase().home()
     this.undoStack.forEach(command => command.toExecute())
     this.turtle.render()
   }
@@ -84,19 +88,27 @@ class TurtleCommandCenter {
     if (!getsCommand)
       throw new Error(`I can only learn commands.`)
 
+    let chain = command.commandChain
+
+    this.deregisterChain(chain)
 
     if (typeof name !== 'string')
       throw new Error(
         `Names of learned commands must be strings. You gave me a(n) ${typeof name}.`
       )
 
+    window[name] = this.composeLearnedCommand(name, chain)
+  }
 
-    window[name] = () => {
-      let chain = this.learned[name].slice(0)
+  composeLearnedCommand (name, chain) {
+    this.learned[name] = chain
 
-      this.registerChain(chain)
+    return () => {
+      let theChain = this.learned[name].slice(0)
 
-      return new TurtleCommand(this, chain)
+      this.registerChain(theChain)
+
+      return new TurtleCommand(this, theChain)
     }
   }
 
@@ -105,6 +117,7 @@ class TurtleCommandCenter {
 class TurtleSubcommandCenter extends TurtleCommandCenter {
 
   constructor(...args) {
+    super(...args)
     this.undoStack = args.last()
 
     this.relinquishGlobals = language.borrowGlobalContext(this)
@@ -130,6 +143,11 @@ class TurtleCommand {
     for (let method in this.turtleMethods) {
       if ({}.hasOwnProperty.call(this.turtleMethods, method))
         this[method] = this.buildMethod(method)
+    }
+
+    for (let command in commandCenter.learned) {
+      if ({}.hasOwnProperty.call(commandCenter.learned, command))
+        this[command] = window[command]
     }
 
     this.commandCenter = commandCenter
