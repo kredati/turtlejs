@@ -31,4 +31,8 @@ var functionalTimes = function(times, callback) {
 
 Object.assign(window, {'times': functionalTimes})
 
+// *** ARRAY.LAST
+// Define a helper method, last(), on Array.prototype;
+// Returns the last element of an array
+// (If we're already monkey patching, why not?)
 Array.prototype.last = function() { return this[this.length - 1] }

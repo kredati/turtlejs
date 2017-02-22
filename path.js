@@ -3,11 +3,12 @@ class Path {
   constructor () {
     this.lines = []
     this.currentSegment = []
+    this.currentColor = color(200, 200, 200, 255)
     this.lines.push(this.currentSegment)
   }
 
   render () {
-    stroke(255, 255, 255, 200)
+    stroke(200, 200, 200, 255)
     strokeWeight(1)
 
     this.lines.forEach(Path.drawSegment)
@@ -23,12 +24,23 @@ class Path {
     if (index) {
       let previousNode = segment[index-1]
 
-      line(node.x, node.y, previousNode.x, previousNode.y)
+      stroke(node.color)
+
+      line(node.location.x,
+        node.location.y,
+        previousNode.location.x,
+        previousNode.location.y)
     }
   }
 
-  addNode (vector) {
-    this.currentSegment.push(vector.copy())
+  static composeNode (location, color) {
+    return {location, color}
+  }
+
+  addNode (location) {
+    let node = Path.composeNode(location.copy(), this.currentColor)
+
+    this.currentSegment.push(node)
 
     return this
   }
@@ -40,6 +52,12 @@ class Path {
     this.lines.push(this.currentSegment)
 
     if (origin) this.addNode(origin)
+
+    return this
+  }
+
+  setColor (...args) {
+    this.currentColor = color(...args)
 
     return this
   }
