@@ -16,27 +16,6 @@ class Path {
     return this
   }
 
-  static drawSegment (segment) {
-    segment.forEach(Path.drawLine)
-  }
-
-  static drawLine (node, index, segment) {
-    if (index) {
-      let previousNode = segment[index-1]
-
-      stroke(node.color)
-
-      line(node.location.x,
-        node.location.y,
-        previousNode.location.x,
-        previousNode.location.y)
-    }
-  }
-
-  static composeNode (location, color) {
-    return {location, color}
-  }
-
   addNode (location) {
     let node = Path.composeNode(location.copy(), this.currentColor)
 
@@ -60,6 +39,27 @@ class Path {
     this.currentColor = color(...args)
 
     return this
+  }
+
+  static drawSegment (segment) {
+    segment.forEach(Path.drawLine)
+  }
+
+  static drawLine (node, index, segment) {
+    if (index) {
+      let previousNode = segment[index-1]
+
+      stroke(node.color)
+
+      line(node.location.x,
+        node.location.y,
+        previousNode.location.x,
+        previousNode.location.y)
+    }
+  }
+
+  static composeNode (location, color) {
+    return {location, color}
   }
 
 }

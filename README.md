@@ -10,9 +10,9 @@ The idea behind TurtleJS is both that LOGO got a great many things right in the 
 ## Working with Javascript
 At the same time, TurtleJS isn't *just* LOGO, or, for that matter, just turtle graphics. You can find both [actual LOGO interpreters](http://www.calormen.com/jslogo/) and deeply robust [turtle graphics](http://spencertipping.com/cheloniidae/) elsewhere. What TurtleJS does is adapt (rather freely at times) the ethos and methods of LOGO and its turtle graphics to contemporary JS. It does this a few ways:
 *   Its domain-specific language is a strict (if faintly weird) subset of Javascript
-*   Its primary interactive environment is the Javascript console in modern browsers (IE need not apply)
+*   Its primary interactive environment is the Javascript console in modern browsers: specifically Google's Chrome (IE need not apply)
 *   In the spirit of LOGO's origin in Lisps, it embraces functional Javascript (where it can; graphics are stateful)
-*   Its idiom uses a deeply simplified syntax (e.g. no semicolons, fat-arrow functions—where it can, it attenuates Javascript's C origins)
+*   Its idiom uses a deeply simplified syntax (e.g. chained commands, no semicolons, fat-arrow functions—where it can, it attenuates Javascript's C origins)
 *   It uses, and is designed ultimately to expose, [p5.js](http://p5js.org), which is itself an adaptation of [Processing](https://processing.org)'s rather free interpretation of LOGO and its turtle graphics
 
 ## Learning with Javascript
