@@ -8,15 +8,10 @@ class TurtleCommandCenter {
     this.redoStack = []
 
     this.learned = {}
-
-    // this.exportGlobals()
-
-    // TurtleCommandCenter.ready()
   }
 
   executeStack (parent) {
     if (this.stack.length) {
-      // console.log('Command received! Thank you for letting me work on this.')
 
       this.stack.forEach(chain => {
         chain.forEach(command => { command.execute() })
@@ -27,7 +22,6 @@ class TurtleCommandCenter {
 
       this.turtle.render()
 
-      // console.log('I\'m done! Ready for your next instruction.')
     }
   }
 
@@ -44,34 +38,9 @@ class TurtleCommandCenter {
     this.stack[chainIndex] = []
   }
 
-  exportGlobals () {
-    let turtle = this.turtle
-
-    for (let method in turtle.methods)
-      if ({}.hasOwnProperty.call(turtle.methods, method)) {
-        window[method] = argument =>
-          new TurtleCommand(this, [])[method](argument)
-      }
-
-    window.repeat = (times, commands) =>
-      new TurtleCommand(this, []).repeat(times, commands)
-
-    window.undo = this.undo.bind(this)
-    window.redo = this.redo.bind(this)
-
-    window.learn = this.learn.bind(this)
-
-    window.reset = this.reset.bind(this)
-
-  }
-
   reset () {
-    this.turtle.reset()
-    this.turtle.render()
-
     this.resetStacks()
 
-    console.clear()
 
     console.log('Reset and ready!')
   }
@@ -85,8 +54,6 @@ class TurtleCommandCenter {
     this.redoStack = undone.concat(this.redoStack)
     this.undoStack = stack
 
-    this.turtle.erase()
-    this.turtle.home()
     this.undoStack.forEach(command => command.toExecute())
     this.turtle.render()
   }
@@ -117,14 +84,12 @@ class TurtleCommandCenter {
     if (!getsCommand)
       throw new Error(`I can only learn commands.`)
 
-    this.deregisterChain(command.commandChain)
 
     if (typeof name !== 'string')
       throw new Error(
         `Names of learned commands must be strings. You gave me a(n) ${typeof name}.`
       )
 
-    this.learned[name] = command.commandChain
 
     window[name] = () => {
       let chain = this.learned[name].slice(0)
@@ -140,7 +105,6 @@ class TurtleCommandCenter {
 class TurtleSubcommandCenter extends TurtleCommandCenter {
 
   constructor(...args) {
-    super(args)
     this.undoStack = args.last()
 
     this.relinquishGlobals = language.borrowGlobalContext(this)

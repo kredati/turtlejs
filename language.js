@@ -17,7 +17,8 @@ var language = {
     'home',
     'erase',
     'report',
-    'repeat'
+    'repeat',
+    'pathColor'
   ],
 
   composeGlobalContext (commandCenter) {
@@ -49,11 +50,6 @@ var language = {
     })
 
     return methods
-  },
-
-  exportRepeat(commandCenter) {
-    window.repeat = (times, commands) =>
-      new TurtleCommand(commandCenter, []).repeat(times, commands)
   },
 
   borrowGlobalContext (subcommandCtx) {

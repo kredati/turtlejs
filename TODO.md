@@ -8,13 +8,16 @@
 -   [x] Implement origin() on turtle, which will reset the turtle's position (DONE: as home()--p5 uses origin)
 -   [ ] Implement help--move help away from the turtle and to the command center. This might be the beginning of pedagogical documentation.
 -   [x] Refactor command center global export--make the hard-coding (unavoidable here without something like typescript) much friendlier.
--   [ ] Possible additional idears for turtle functionality, like changing line color
--   [ ] Is filling even possible? That seems like a lot of math or logic--perhaps consult the other Javascript turtle graphics item
--   [ ] Further consideration of mitigating the console's literalness. I feel pretty insistent that the console is where I want turtle graphics to happen (and not in a dedicated interpreter). (e.g. help(ReferenceError) as a way of getting better information?--but I want this to be fully real Javascript)
--   [ ] StackOverflow may well be a way to get better information about how to manage problems with the console
+-   [x] Possible additional idears for turtle functionality, like changing line color (FUCK YEAH LINE COLOR)
+-   [x] Is filling even possible? That seems like a lot of math or logic--perhaps consult the other Javascript turtle graphics item (I think this is an algorithmic problem that is best left unsolved.)
+-   [x] Further consideration of mitigating the console's literalness. I feel pretty insistent that the console is where I want turtle graphics to happen (and not in a dedicated interpreter). (e.g. help(ReferenceError) as a way of getting better information?--but I want this to be fully real Javascript) (See below: the whole help system needs to be built from scratch.)
+-   [x] StackOverflow may well be a way to get better information about how to manage problems with the console
+-   [ ] A very small but perhaps significant item: figure out how to get the "turtle ready!" message to appear after the return value for the "command methods" (undo, redo, reset). learn() somehow works already, perhaps because of its invocation of commands?
 -   [x] Perhaps a teach() or learn() function? Would that work as a transitional object for building functions? (Think also about fat arrow functions vs. function keyword: which makes sense?)--it would be trivial-ish to code (cannot bind directly to window, but can/should bind to CommandCenter prototype or auxiliary object; yay hacking!; (it should not bind to the prototype!))
--   [ ] Using the console, how do we save our work? Do input and output? This, I think, makes very good sense indeed using something like CodePen. (NOT using console, but instead using a file.)
--   [ ] Test whether using a plain .js file works. (It absolutely should, but just in case.)
+-   [ ] Using the console, how do we save our work? Do input and output? This, I think, makes very good sense indeed using something like CodePen. (NOT using console, but instead using a file.) (Solution, not yet implemented: use something like the undo stack that captures commands, adds them to a stack, and then composes them into a text file for download.)
+-   [x] Test whether using a plain .js file works. (It absolutely should, but just in case.) (A plain old text file does not work—the p5.js stuff doesn't run until onload. BUT: putting it in a function sure does work.)
+-   [ ] Factor the module loading out into the language module.
+-   [ ] Using require.js or curl.js or some other AMD package, set up command-line loading; or, possibly, if I don't want to use an external dependency, check out something like: <http://stackoverflow.com/questions/14446447/javascript-read-local-text-file>
 -   [ ] Think about implementation details: Is there a way to decouple the command and the command center? Is there a way to write the turtle more functionally? Abstract graphics rendering? Is p5.js necessarily super stateful and therefore sadly imperative? Is there a way of writing pure graphics rendering functions?
 
 (To which I can only say: turtle graphics logic is poised in between receiving commands from users and drawing graphics: these are both inherently stateful. Both the command center and the graphics rendering engines are I/O and therefore largely best to use stateful OO.)
