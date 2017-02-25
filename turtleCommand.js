@@ -97,7 +97,7 @@ class TurtleCommandCenter {
         `Names of learned commands must be strings. You gave me a(n) ${typeof name}.`
       )
 
-    window[name] = this.composeLearnedCommand(name, chain)
+    language.setGlobal(name, this.composeLearnedCommand(name, chain))
   }
 
   composeLearnedCommand (name, chain) {
@@ -147,7 +147,7 @@ class TurtleCommand {
 
     for (let command in commandCenter.learned) {
       if ({}.hasOwnProperty.call(commandCenter.learned, command))
-        this[command] = window[command]
+        this[command] = language.getGlobal(command)
     }
 
     this.commandCenter = commandCenter

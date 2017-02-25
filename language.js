@@ -58,6 +58,14 @@ var language = {
     return () => {
       this.exportTurtleCommands(window.commandCenter)
     }
+  },
+
+  getGlobal (name) {
+    return window[name]
+  },
+
+  setGlobal (name, fn) {
+    window[name] = fn
   }
 
 }
