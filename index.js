@@ -1,3 +1,5 @@
+new p5()
+
 var turtle,
   commandCenter
 
@@ -13,12 +15,7 @@ var setup = () => {
   console.log('Welcome to TurtleJS!\nFor help, type help() and press enter.')
   turtle.render()
 
-  if (window.goTurtle) {
-    console.log('Running your startup script!')
-    goTurtle()
-  } else {
-    console.log('Turtle ready!')
-  }
+  console.log('Turtle ready!')
 }
 
 var draw = () => {
