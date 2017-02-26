@@ -94,10 +94,17 @@ class TurtleCommandCenter {
 
     if (typeof name !== 'string')
       throw new Error(
-        `Names of learned commands must be strings. You gave me a(n) ${typeof name}.`
+        `Names of commands must be strings. You gave me a(n) ${typeof name}.`
       )
 
-    language.setGlobal(name, this.composeLearnedCommand(name, chain))
+    if (language.conflicts(name))
+      throw new Error(
+        `The word "${name}" is reserved for system calls; try another name.`
+      )
+
+    let learnedCommand = this.composeLearnedCommand(name, chain)
+
+    language.setGlobal(name, learnedCommand)
   }
 
   composeLearnedCommand (name, chain) {

@@ -29,7 +29,7 @@
 -   [x] Add a few monkeypatched helper functions, especially times() on number? Or perhaps as a function n.times(do) or times(n, do). (DONE: thank you StackOverflow for guiding me to this particular answer quickly.)
 -   [x] Factor everything that addresses or messes with global context out into the language module: anything that puts anything on window should be managed by language.
 -   [ ] Factor everything into a single module (kredati, turtlejs)
--   [ ] Better error handling with learn: ensure no namespace collisions (users should be able to redefine their own commands but *not* overwrite any p5, turtlejs, or JS commands)
+-   [x] Better error handling with learn: ensure no namespace collisions (users should be able to redefine their own commands but *not* overwrite any p5, turtlejs, or JS commands)
 -   [ ] Develop a config system that allows for case-by-case loading of particular commands, aliases, etc. (The idea here is both that each instructor can vary the environment to their needs, and also that different lessons in the same course can modulate what's available to students.)
 -   [ ] Regarding the animation system: this should be relatively easy (emphasis on relatively) using generator functions! (That means I need to understand them better.) The command stack goes to a processor which either simply executes all the commands and then renders the turtle & path, or it analyzes the movements described in the stack into segments of equal distance; then renders a stack of frames; each of which is a set of p5 instructions; this stack is simply stepped through in draw().
 

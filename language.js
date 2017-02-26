@@ -21,6 +21,8 @@ var language = {
     'pathColor'
   ],
 
+  'learnedCommands': [],
+
   composeGlobalContext (commandCenter) {
     window.commandCenter = commandCenter
     this.exportCenterCommands(commandCenter)
@@ -65,7 +67,21 @@ var language = {
   },
 
   setGlobal (name, fn) {
+    if (this.conflicts(name))
+      throw new Error(
+        `The word ${name} is reserved for system function calls.`
+      )
+
+    this.learnedCommands.push({name, fn})
     window[name] = fn
+  },
+
+  conflicts (name) {
+    return !!window[name] && !this.isLearned(name)
+  },
+
+  isLearned (name) {
+    return this.learnedCommands.map(command => command.name).includes(name)
   }
 
 }
