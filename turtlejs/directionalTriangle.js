@@ -1,6 +1,6 @@
 // Draws a triangle of specified size, pointing in the specified heading
 // Adapted freely from Dan Shiffman's flocking/boids from The Nature of Code
-class DirectionalTriangle {
+(turtlejs => { turtlejs.Triangle = class DirectionalTriangle {
 
   constructor (radius) {
     this.radius = radius
@@ -38,4 +38,4 @@ class DirectionalTriangle {
     endShape(CLOSE)
   }
 
-}
+} })(window.turtlejs)

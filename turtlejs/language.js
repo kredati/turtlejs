@@ -1,4 +1,8 @@
-var language = {
+((global, turtlejs) => { turtlejs.language = {
+
+  'turtlejsMethods': [
+    'load'
+  ],
 
   'commandMethods': [
     'undo',
@@ -24,21 +28,28 @@ var language = {
   'learnedCommands': [],
 
   composeGlobalContext (commandCenter) {
-    window.commandCenter = commandCenter
+    global.commandCenter = commandCenter
     this.exportCenterCommands(commandCenter)
     this.exportTurtleCommands(commandCenter)
+    this.exportTurtlejsMethods()
   },
 
   exportCenterCommands (commandCenter) {
     this.commandMethods.forEach(method => {
-      window[method] = commandCenter[method].bind(commandCenter)
+      global[method] = commandCenter[method].bind(commandCenter)
     })
   },
 
   exportTurtleCommands (commandCenter) {
     this.turtleMethods.forEach(method => {
-      window[method] = (...args) =>
-        new TurtleCommand(commandCenter, [])[method](...args)
+      global[method] = (...args) =>
+        new turtlejs.TurtleCommand(commandCenter, [])[method](...args)
+    })
+  },
+
+  exportTurtlejsMethods () {
+    this.turtlejsMethods.forEach(method => {
+      global[method] = turtlejs[method]
     })
   },
 
@@ -58,30 +69,31 @@ var language = {
     this.exportTurtleCommands(subcommandCtx)
 
     return () => {
-      this.exportTurtleCommands(window.commandCenter)
+      this.exportTurtleCommands(global.commandCenter)
     }
   },
 
   getGlobal (name) {
-    return window[name]
+    return global[name]
   },
 
   setGlobal (name, fn) {
     if (this.conflicts(name))
       throw new Error(
-        `The word ${name} is reserved for system function calls.`
+        `The word "${name}" is reserved for system function calls.`
       )
 
-    this.learnedCommands.push({name, fn})
-    window[name] = fn
+    if (!this.isLearned(name)) this.learnedCommands.push(name)
+
+    global[name] = fn
   },
 
   conflicts (name) {
-    return !!window[name] && !this.isLearned(name)
+    return Boolean(global[name]) && !this.isLearned(name)
   },
 
   isLearned (name) {
-    return this.learnedCommands.map(command => command.name).includes(name)
+    return this.learnedCommands.includes(name)
   }
 
-}
+} })(window, window.turtlejs)

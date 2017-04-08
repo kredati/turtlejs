@@ -1,4 +1,4 @@
-class Turtle {
+(turtlejs => { turtlejs.Turtle = class Turtle {
 
   constructor (x = 0, y = 0) {
     this.origin = new p5.Vector(x, y)
@@ -7,9 +7,9 @@ class Turtle {
     this.position = this.origin.copy()
     this.heading = this.originalHeading
 
-    this.triangle = new DirectionalTriangle(15)
+    this.triangle = new turtlejs.Triangle(15)
 
-    this.path = new Path()
+    this.path = new turtlejs.Path()
     this.path.addNode(this.position)
   }
 
@@ -67,7 +67,7 @@ class Turtle {
   }
 
   erase () {
-    this.path = new Path()
+    this.path = new turtlejs.Path()
     this.path.addNode(this.position)
 
     return this
@@ -98,4 +98,4 @@ class Turtle {
     console.log(`Turtle is facing ${heading}.`)
   }
 
-}
+} })(window.turtlejs)

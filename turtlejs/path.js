@@ -1,4 +1,4 @@
-class Path {
+(turtlejs => { turtlejs.Path = class Path {
 
   constructor () {
     this.lines = []
@@ -62,4 +62,4 @@ class Path {
     return {location, color}
   }
 
-}
+} })(window.turtlejs)

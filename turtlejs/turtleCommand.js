@@ -1,6 +1,8 @@
+(turtlejs => {
+
 class TurtleCommandCenter {
 
-  constructor (turtle = new Turtle(width/2, height/2)) {
+  constructor (turtle = new turtlejs.Turtle(width/2, height/2)) {
     this.turtle = turtle
 
     this.stack = []
@@ -63,13 +65,14 @@ class TurtleCommandCenter {
   }
 
   redo (steps = 1) {
-    let stepsToRedo = steps > this.redoStack.length
-      ? this.redoStack.length
-      : steps
+    let stackLength = this.redoStack.length,
+      stepsToRedo = steps > stackLength
+        ? stackLength
+        : steps
 
     let stack = this.redoStack.slice(0, steps)
 
-    this.redoStack = this.redoStack.slice(steps, length)
+    this.redoStack = this.redoStack.slice(steps, stackLength)
 
     stack.forEach(command => command.toExecute())
 
@@ -97,14 +100,14 @@ class TurtleCommandCenter {
         `Names of commands must be strings. You gave me a(n) ${typeof name}.`
       )
 
-    if (language.conflicts(name))
+    if (turtlejs.language.conflicts(name))
       throw new Error(
         `The word "${name}" is reserved for system calls; try another name.`
       )
 
     let learnedCommand = this.composeLearnedCommand(name, chain)
 
-    language.setGlobal(name, learnedCommand)
+    turtlejs.language.setGlobal(name, learnedCommand)
   }
 
   composeLearnedCommand (name, chain) {
@@ -127,7 +130,7 @@ class TurtleSubcommandCenter extends TurtleCommandCenter {
     super(...args)
     this.undoStack = args.last()
 
-    this.relinquishGlobals = language.borrowGlobalContext(this)
+    this.relinquishGlobals = turtlejs.language.borrowGlobalContext(this)
   }
 
   executeStack (parent) {
@@ -145,7 +148,7 @@ class TurtleCommand {
   constructor (commandCenter, commandChain = []) {
     this.turtle = commandCenter.turtle
 
-    this.turtleMethods = language.getTurtleMethods(commandCenter)
+    this.turtleMethods = turtlejs.language.getTurtleMethods(commandCenter)
 
     for (let method in this.turtleMethods) {
       if ({}.hasOwnProperty.call(this.turtleMethods, method))
@@ -154,7 +157,7 @@ class TurtleCommand {
 
     for (let command in commandCenter.learned) {
       if ({}.hasOwnProperty.call(commandCenter.learned, command))
-        this[command] = language.getGlobal(command)
+        this[command] = turtlejs.language.getGlobal(command)
     }
 
     this.commandCenter = commandCenter
@@ -166,6 +169,7 @@ class TurtleCommand {
     return argument => {
       this.toExecute = () => this.turtleMethods[command](argument)
       this.commandChain.push(this)
+      this._info = {command, argument}
 
       return new TurtleCommand(this.commandCenter, this.commandChain)
     }
@@ -187,6 +191,8 @@ class TurtleCommand {
 
     this.commandChain.push(this)
 
+    this._info = {'command': 'repeat', times, commands}
+
     return new TurtleCommand(this.commandCenter, this.commandChain)
   }
 
@@ -207,3 +213,9 @@ class TurtleCommand {
   }
 
 }
+
+Object.assign(turtlejs,
+  {TurtleCommandCenter, TurtleSubcommandCenter, TurtleCommand}
+)
+
+})(window.turtlejs)
