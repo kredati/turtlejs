@@ -21,4 +21,5 @@ var setup = () => {
 
 var draw = () => {
   commandCenter.executeStack()
+  turtlejs.listener.listen()
 }

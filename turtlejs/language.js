@@ -1,7 +1,8 @@
 ((global, turtlejs) => { turtlejs.language = {
 
   'turtlejsMethods': [
-    'load'
+    'load',
+    'listen'
   ],
 
   'commandMethods': [

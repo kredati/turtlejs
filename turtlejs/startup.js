@@ -10,6 +10,7 @@
     'hud',
     'turtle',
     'turtleCommand',
+    'listener',
     'language'
   ]
 
