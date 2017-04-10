@@ -53,9 +53,9 @@ A few notes after looking at Pencil Code:
 -   [ ] Animating the turtle is a really good idea; it heightens the syntonicity of the thing: you can *see* it move, and so you can *feel* the relation to your own embodiment
 -   [ ] I don't think we need code blocks, but a meaningful palette of functions and control structures seems worthwhile.
 -   [ ] Ideally, there would be some way of scaffolding the things, too (the equivalent to drag-and-drop in block coding), but the console really limits what's possible here
--   [ ] A simple (x, y) readout of the mouse position would be really helpful
+-   [x] A simple (x, y) readout of the mouse position would be really helpful
 -   [ ] Pencil Code allows the Turtle to do things *other* than draw lines: it will draw circles and boxes and so on. This will be a nice transition from turtle graphics to cartesian graphics?
 -   [ ] Help files should be reasonably implemented in JS itself. A JSON file (or several) that contain information on usage (Perhaps: but there's usefulness in structured information as a plain old browser situation.)
--   [ ] Research: Are there automatic parsers that can tell me about arguments? (This is getting close to TypeScript; but I want tools that let me inspect plain JS functions.)
+-   [ ] Research: Are there automatic parsers that can tell me about arguments? (This is getting close to TypeScript; but I want tools that let me inspect plain JS functions.) (Why did I think I needed this?)
 -   [ ] In addition to custom help, we will also need *custom error messages*.
 -   [ ] As a riff on the above: calling help() or some such after an error will provide a friendlier explanation of that error

@@ -20,7 +20,8 @@
         yPos = Math.round(this.turtlePosition.y),
         positionText =
           `Position: (${xPos}, ${yPos}).`,
-        headingText = `Heading: ${HUD.radiansToCompass(this.turtleHeading)}.`,
+        headingText =
+          `Heading: ${Math.round(HUD.radiansToCompass(this.turtleHeading))}.`,
         HUDtext = `${positionText} ${headingText}`
 
       fill(255, 255, 255, 255)
