@@ -11,12 +11,16 @@
 
     this.path = new turtlejs.Path()
     this.path.addNode(this.position)
+
+    this.hud = new turtlejs.HUD(this)
   }
 
   render () {
     background(0)
     this.path.render()
     this.triangle.render(this.position, this.heading)
+
+    this.hud.update().render()
   }
 
   jump (distance = 0) {

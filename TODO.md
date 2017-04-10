@@ -12,7 +12,7 @@
 -   [x] Is filling even possible? That seems like a lot of math or logic--perhaps consult the other Javascript turtle graphics item (I think this is an algorithmic problem that is best left unsolved.)
 -   [x] Further consideration of mitigating the console's literalness. I feel pretty insistent that the console is where I want turtle graphics to happen (and not in a dedicated interpreter). (e.g. help(ReferenceError) as a way of getting better information?--but I want this to be fully real Javascript) (See below: the whole help system needs to be built from scratch.)
 -   [x] StackOverflow may well be a way to get better information about how to manage problems with the console
--   [ ] A very small but perhaps significant item: figure out how to get the "turtle ready!" message to appear after the return value for the "command methods" (undo, redo, reset). learn() somehow works already, perhaps because of its invocation of commands?
+-   [ ] A very small but perhaps significant item: figure out how to get the "turtle ready!" message to appear after the return value for the "command methods" (undo, redo, reset). learn() somehow works already, perhaps because of its invocation of commands? Edit: at current, these don't give a turtle ready message. These should indeed give turtle ready messages.
 -   [x] Perhaps a teach() or learn() function? Would that work as a transitional object for building functions? (Think also about fat arrow functions vs. function keyword: which makes sense?)--it would be trivial-ish to code (cannot bind directly to window, but can/should bind to CommandCenter prototype or auxiliary object; yay hacking!; (it should not bind to the prototype!))
 -   [ ] Using the console, how do we save our work? Do input and output? This, I think, makes very good sense indeed using something like CodePen. (NOT using console, but instead using a file.) (Solution, not yet implemented: use something like the undo stack that captures commands, adds them to a stack, and then composes them into a text file for download.)
 -   [x] Test whether using a plain .js file works. (It absolutely should, but just in case.) (A plain old text file does not work—the p5.js stuff doesn't run until onload. BUT: putting it in a function sure does work.)
@@ -55,7 +55,7 @@ A few notes after looking at Pencil Code:
 -   [ ] Ideally, there would be some way of scaffolding the things, too (the equivalent to drag-and-drop in block coding), but the console really limits what's possible here
 -   [ ] A simple (x, y) readout of the mouse position would be really helpful
 -   [ ] Pencil Code allows the Turtle to do things *other* than draw lines: it will draw circles and boxes and so on. This will be a nice transition from turtle graphics to cartesian graphics?
--   [ ] Help files should be reasonably implemented in JS itself. A JSON file (or several) that contain information on usage
+-   [ ] Help files should be reasonably implemented in JS itself. A JSON file (or several) that contain information on usage (Perhaps: but there's usefulness in structured information as a plain old browser situation.)
 -   [ ] Research: Are there automatic parsers that can tell me about arguments? (This is getting close to TypeScript; but I want tools that let me inspect plain JS functions.)
 -   [ ] In addition to custom help, we will also need *custom error messages*.
 -   [ ] As a riff on the above: calling help() or some such after an error will provide a friendlier explanation of that error

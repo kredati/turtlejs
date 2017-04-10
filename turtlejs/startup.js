@@ -7,6 +7,7 @@
   turtlejs.modules = [
     'directionalTriangle',
     'path',
+    'hud',
     'turtle',
     'turtleCommand',
     'language'
