@@ -27,15 +27,15 @@
     console.log(`Could not load script ${name}.`)
   }
 
-  let load = (fileName, onload, onerror) => {
+  let load = (fileName, onLoad, onError) => {
     let head = document.getElementsByTagName('head').item(0),
       script = document.createElement('script')
 
     script.setAttribute('type', 'text/javascript')
     script.setAttribute('src', `${fileName}`)
 
-    script.addEventListener('load', e => onload(fileName, e))
-    script.addEventListener('error', e => onerror(fileName, e))
+    script.addEventListener('load', e => onLoad(fileName, e))
+    script.addEventListener('error', e => onError(fileName, e))
 
     head.appendChild(script)
   }
@@ -55,13 +55,10 @@
   }
 
   let loadLibrary = library => {
-    let lib = library
+    let [next, ...remaining] = library
 
-    if (lib.length > 0) {
-      let nextLib = lib[0]
-
-      lib = lib.slice(1, library.length)
-      load(`./library/${nextLib}.js`, () => loadLibrary(lib), loadingError)
+    if (next) {
+      load(`./library/${next}.js`, () => loadLibrary(remaining), loadingError)
     } else {
       loadModules(turtlejs.modules)
     }
