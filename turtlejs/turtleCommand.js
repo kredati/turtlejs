@@ -181,17 +181,17 @@ class TurtleCommand {
     return this
   }
 
-  repeat (times, commands) {
+  repeat (times, command) {
 
-    if (commands instanceof TurtleCommand) this.repeatCommands(times, commands)
+    if (command instanceof TurtleCommand) this.repeatCommands(times, command)
 
     else throw new Error(
-      `I can only repeat commands. You gave me a(n) ${typeof toDo}.`
+      `I can only repeat commands. You gave me a(n) ${typeof command}.`
     )
 
     this.commandChain.push(this)
 
-    this._info = {'command': 'repeat', times, commands}
+    this._info = {'command': 'repeat', times, 'repeating': command}
 
     return new TurtleCommand(this.commandCenter, this.commandChain)
   }
@@ -210,6 +210,18 @@ class TurtleCommand {
       localCommandCenter.registerChain(repeater)
       localCommandCenter.executeStack()
     }
+  }
+
+  stop () {
+    this.commandCenter.deregisterChain(this.commandChain)
+
+    return this
+  }
+
+  go () {
+    this.commandCenter.registerChain(this.commandChain)
+
+    return this
   }
 
 }

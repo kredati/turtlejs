@@ -33,19 +33,10 @@ let listeningOn = key => {
   listeningKeys.includes(key)
 }
 
-let listenOn = (key, command) => {
-  let listensToCommand = command instanceof turtlejs.TurtleCommand
-
-  if (!listensToCommand)
-    throw new Error('I can only learn commands!')
-
-  command.stop()
-
-  let fn = () => command.go()
-
+let listenOn = (key, fn, context) => {
   if (!listeningOn(key)) listeningKeys.push(key)
 
-  listeners[key] = new Listener(key, fn)
+  listeners[key] = new Listener(key, fn, context)
 }
 
 let reset = () => {
