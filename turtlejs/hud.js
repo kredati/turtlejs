@@ -24,7 +24,7 @@
           `Heading: ${Math.round(HUD.radiansToCompass(this.turtleHeading))}.`,
         HUDtext = `${positionText} ${headingText}`
 
-      fill(255, 255, 255, 255)
+      fill(255, 255, 255, 80)
       textSize(12)
       text(HUDtext, 5, height - 5)
 

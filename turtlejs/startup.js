@@ -45,13 +45,10 @@
   }
 
   let loadModules = modules => {
-    let mods = modules
+    let [next, ...remaining] = modules
 
-    if (modules.length > 0) {
-      let nextModule = mods[0]
-
-      mods = mods.slice(1, mods.length)
-      loadModule(nextModule, () => loadModules(mods), loadingError)
+    if (next) {
+      loadModule(next, () => loadModules(remaining), loadingError)
     } else {
       load(`index.js`, () => false, loadingError)
     }

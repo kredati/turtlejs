@@ -1,4 +1,6 @@
-((global, turtlejs) => { turtlejs.language = {
+((global, turtlejs) => {
+
+turtlejs.language = {
 
   'turtlejsMethods': [
     'load',
