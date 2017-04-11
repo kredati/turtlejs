@@ -52,10 +52,10 @@ class TurtleCommandCenter {
 
   undo (steps = 1) {
     let stackLength = this.undoStack.length,
-      stepsToUndo = Math.min(stackLength, steps),
-      stack = this.undoStack.slice(0, stackLength - stepsToUndo)
+      toUndo = Math.min(stackLength, steps),
+      stack = this.undoStack.slice(0, stackLength - toUndo)
 
-    let undone = this.undoStack.slice(stackLength - stepsToUndo, stackLength)
+    let undone = this.undoStack.slice(stackLength - toUndo, stackLength)
 
     this.redoStack = undone.concat(this.redoStack)
     this.undoStack = stack
