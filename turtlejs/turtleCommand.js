@@ -91,9 +91,7 @@ class TurtleCommandCenter {
     if (!getsCommand)
       throw new Error(`I can only learn commands.`)
 
-    let chain = command.commandChain
-
-    this.deregisterChain(chain)
+    command.stop()
 
     if (typeof name !== 'string')
       throw new Error(
@@ -105,21 +103,9 @@ class TurtleCommandCenter {
         `The word "${name}" is reserved for system calls; try another name.`
       )
 
-    let learnedCommand = this.composeLearnedCommand(name, chain)
+    let learned = () => command.go()
 
-    turtlejs.language.setGlobal(name, learnedCommand)
-  }
-
-  composeLearnedCommand (name, chain) {
-    this.learned[name] = chain
-
-    return () => {
-      let theChain = this.learned[name].slice(0)
-
-      this.registerChain(theChain)
-
-      return new TurtleCommand(this, theChain)
-    }
+    turtlejs.language.setGlobal(name, learned)
   }
 
 }
@@ -162,7 +148,8 @@ class TurtleCommand {
 
     this.commandCenter = commandCenter
     this.commandChain = commandChain
-    this.commandCenter.registerChain(this.commandChain)
+
+    this.go()
   }
 
   buildMethod (command) {
@@ -183,7 +170,7 @@ class TurtleCommand {
 
   repeat (times, command) {
 
-    if (command instanceof TurtleCommand) this.repeatCommands(times, command)
+    if (command instanceof TurtleCommand) this.repeatCommand(times, command)
 
     else throw new Error(
       `I can only repeat commands. You gave me a(n) ${typeof command}.`
@@ -196,13 +183,13 @@ class TurtleCommand {
     return new TurtleCommand(this.commandCenter, this.commandChain)
   }
 
-  repeatCommands (times, command) {
+  repeatCommand (times, command) {
     let repeater = [],
       commandChain = command.commandChain
 
     times.times(() => { repeater = repeater.concat(commandChain) })
 
-    this.commandCenter.deregisterChain(commandChain)
+    command.stop()
 
     this.toExecute = () => {
       let localCommandCenter = new TurtleSubcommandCenter(this.turtle)
