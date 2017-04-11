@@ -21,7 +21,7 @@
         positionText =
           `Position: (${xPos}, ${yPos}).`,
         headingText =
-          `Heading: ${Math.round(HUD.radiansToCompass(this.turtleHeading))}.`,
+          `Heading: ${HUD.radiansToCompass(this.turtleHeading)}.`,
         HUDtext = `${positionText} ${headingText}`
 
       fill(255, 255, 255, 80)
@@ -32,7 +32,7 @@
     }
 
     static radiansToCompass (rads) {
-      let degs = degrees(rads)
+      let degs = Math.round(degrees(rads))
 
       return HUD.geometryToCompass(degs)
     }
