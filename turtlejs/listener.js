@@ -21,22 +21,36 @@ class Listener {
 
 }
 
-let listeners = []
+let listeningKeys = [],
+  listeners = {}
 
 let listen = () => {
   if (keyIsPressed)
-    listeners.forEach(listener => listener.listen())
+    listeningKeys.forEach(key => listeners[key].listen())
+}
+
+let listeningOn = key => {
+  listeningKeys.includes(key)
 }
 
 let listenOn = (key, fn, context) => {
-  listeners.push(new Listener(key, fn, context))
+  if (!listeningOn(key)) listeningKeys.push(key)
+
+  listeners[key] = new Listener(key, fn, context)
+}
+
+let reset = () => {
+  listeningKeys = [],
+    listeners = {}
 }
 
 turtlejs.listener = {
   Listener,
-  listen
+  listen,
+  reset
 }
 
 turtlejs.listen = listenOn
+turtlejs.resetListeners = reset
 
-})(turtlejs)
+})(window.turtlejs)

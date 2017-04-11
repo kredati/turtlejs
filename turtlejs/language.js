@@ -4,7 +4,8 @@ turtlejs.language = {
 
   'turtlejsMethods': [
     'load',
-    'listen'
+    'listen',
+    'resetListeners'
   ],
 
   'commandMethods': [

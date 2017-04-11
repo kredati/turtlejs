@@ -2,7 +2,8 @@
 
   let turtlejs = {}
 
-  turtlejs.libDir = './turtlejs'
+  turtlejs.moduleDir = './turtlejs'
+  turtlejs.libDir = './library'
 
   turtlejs.modules = [
     'directionalTriangle',
@@ -27,7 +28,7 @@
     console.log(`Could not load script ${name}.`)
   }
 
-  let load = (fileName, onLoad, onError) => {
+  let loadFile = (fileName, onLoad, onError) => {
     let head = document.getElementsByTagName('head').item(0),
       script = document.createElement('script')
 
@@ -40,9 +41,16 @@
     head.appendChild(script)
   }
 
-  let loadModule = (name, loaded, error) => {
-    load(`${turtlejs.libDir}/${name}.js`, loaded, error)
+  let composeLoader = directory => {
+    let loader = (name, loaded, error) => {
+      loadFile(`${directory}/${name}.js`, loaded, error)
+    }
+
+    return loader
   }
+
+  let loadModule = composeLoader(turtlejs.moduleDir),
+    loadLibraryItem = composeLoader(turtlejs.libDir)
 
   let loadModules = modules => {
     let [next, ...remaining] = modules
@@ -50,7 +58,7 @@
     if (next) {
       loadModule(next, () => loadModules(remaining), loadingError)
     } else {
-      load(`index.js`, () => false, loadingError)
+      loadFile(`index.js`, () => false, loadingError)
     }
   }
 
@@ -58,7 +66,7 @@
     let [next, ...remaining] = library
 
     if (next) {
-      load(`./library/${next}.js`, () => loadLibrary(remaining), loadingError)
+      loadLibraryItem(next, () => loadLibrary(remaining), loadingError)
     } else {
       loadModules(turtlejs.modules)
     }
@@ -67,7 +75,7 @@
   loadLibrary(turtlejs.library)
 
   turtlejs.load = name => {
-    load(`${name}.js`, loadingSuccess, loadingError)
+    loadFile(`${name}.js`, loadingSuccess, loadingError)
   }
 
   global.turtlejs = turtlejs
