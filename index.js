@@ -7,7 +7,7 @@ var setup = () => {
   createCanvas(600, 500)
   background(0)
 
-  turtle = new turtlejs.Turtle(width/2, height/2)
+  turtle = new turtlejs.Turtle()
   commandCenter = new turtlejs.TurtleCommandCenter(turtle)
 
   turtlejs.language.composeGlobalContext(commandCenter)

@@ -10,6 +10,7 @@
     'path',
     'hud',
     'turtle',
+    'renderer',
     'turtleCommand',
     'listener',
     'language'

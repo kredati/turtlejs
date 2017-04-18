@@ -1,6 +1,8 @@
-(turtlejs => { turtlejs.Turtle = class Turtle {
+(turtlejs => {
 
-  constructor (x = 0, y = 0) {
+turtlejs.Turtle = class Turtle {
+
+  constructor (x = width / 2, y = height / 2) {
     this.origin = new p5.Vector(x, y)
     this.originalHeading = radians(-90)
 
@@ -102,4 +104,6 @@
     console.log(`Turtle is facing ${heading}.`)
   }
 
-} })(window.turtlejs)
+}
+
+})(window.turtlejs)
