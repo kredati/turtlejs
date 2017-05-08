@@ -1,24 +1,25 @@
 (global => {
 
-  let turtlejs = {}
+  let turtlejs = {
 
-  turtlejs.moduleDir = './turtlejs'
-  turtlejs.libDir = './library'
+    'moduleDir': './turtlejs',
+    'libDir': './library',
 
-  turtlejs.modules = [
-    'directionalTriangle',
-    'path',
-    'hud',
-    'turtle',
-    'turtleCommand',
-    'listener',
-    'language'
-  ]
+    'modules': [
+      'directionalTriangle',
+      'path',
+      'hud',
+      'turtle',
+      'turtleCommand',
+      'listener',
+      'language'
+    ],
 
-  turtlejs.library = [
-    'p5.min',
-    'helpers'
-  ]
+    'library': [
+      'p5.min',
+      'helpers'
+    ]
+  }
 
   let loadingSuccess = (name, error) => {
     console.log(`Successfully loaded ${name}!`)
