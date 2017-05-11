@@ -5,12 +5,12 @@
 
 var timesFunction = function(callback) {
   if (typeof callback !== "function") {
-    throw new TypeError("Callback must be a function");
-  } else if (isNaN(parseInt(Number(this.valueOf())))) {
-    throw new TypeError("Object must be a valid number");
+    throw new TypeError("Callback must be a function")
+  } else if (isNaN(parseInt(Number(this.valueOf()), 10))) {
+    throw new TypeError("Object must be a valid number")
   }
   for (var i = 0; i < Number(this.valueOf()); i++) {
-    callback(i);
+    callback(i)
   }
 };
 
@@ -21,7 +21,7 @@ Number.prototype.times = timesFunction;
 var functionalTimes = function(times, callback) {
   if (typeof callback !== "function") {
     throw new TypeError("Callback must be a function")
-  } else if (isNaN(parseInt(Number(times.valueOf())))) {
+  } else if (isNaN(parseInt(Number(times.valueOf()), 10))) {
     throw new TypeError("Times must be a valid number")
   }
   for (let i = 0; i < Number(times.valueOf()); ++i) {
