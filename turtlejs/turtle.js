@@ -7,12 +7,12 @@
     this.position = this.origin.copy()
     this.heading = this.originalHeading
 
-    this.triangle = new turtlejs.Triangle(15)
+    this.triangle = turtlejs.triangle.create(15)
 
-    this.path = new turtlejs.Path()
+    this.path = turtlejs.path.create()
     this.path.addNode(this.position)
 
-    this.hud = new turtlejs.HUD(this)
+    this.hud = turtlejs.HUD.create(this)
   }
 
   render () {
@@ -71,7 +71,7 @@
   }
 
   erase () {
-    this.path = new turtlejs.Path()
+    this.path = turtlejs.path.create()
     this.path.addNode(this.position)
 
     return this

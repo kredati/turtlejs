@@ -6,12 +6,12 @@
     'libDir': './library',
 
     'modules': [
-      'directionalTriangle',
-      'path',
-      'hud',
+      'triangle-factory',
+      'path-factory',
+      'hud-factory',
       'turtle',
       'turtleCommand',
-      'listener',
+      'listener-factory',
       'language'
     ],
 

@@ -5,12 +5,12 @@ class Listener {
   constructor(key, fn, context) {
     if (typeof key === 'string') {
       if (key.length > 1)
-        throw new Error('I can only listen to one key at a time.')
+        throw Error('I can only listen to one key at a time.')
       this.code = key.charCodeAt(0)
     }
     else if (typeof key === 'number')
       this.code = key
-    else throw new Error('I can only listen to valid keys.')
+    else throw Error('I can only listen to valid keys.')
 
     this.fn = fn.bind(context)
   }
@@ -37,7 +37,7 @@ let listenOn = (key, command) => {
   let listensToCommand = command instanceof turtlejs.TurtleCommand
 
   if (!listensToCommand)
-    throw new Error('I can only learn commands!')
+    throw Error('I can only learn commands!')
 
   command.stop()
 
