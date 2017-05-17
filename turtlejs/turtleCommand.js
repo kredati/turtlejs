@@ -154,10 +154,10 @@ class TurtleCommand {
   }
 
   buildMethod (command) {
-    return argument => {
-      this.toExecute = () => this.turtleMethods[command](argument)
+    return (...args) => {
+      this.toExecute = () => this.turtleMethods[command](...args)
       this.commandChain.push(this)
-      this._info = {command, argument}
+      this._info = {command, 'arguments': [...args]}
 
       return new TurtleCommand(this.commandCenter, this.commandChain)
     }

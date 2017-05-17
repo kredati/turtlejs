@@ -100,7 +100,7 @@ module.exports = {
         "max-params": "error",
         "max-statements": "error",
         "max-statements-per-line": "off",
-        "multiline-ternary": "error",
+        "multiline-ternary": "off",
         "new-cap": ["error", { "newIsCapExceptions": ["p5"]}],
         "new-parens": "error",
         "newline-after-var": [
@@ -115,7 +115,7 @@ module.exports = {
         "no-bitwise": "error",
         "no-caller": "error",
         "no-catch-shadow": "error",
-        "no-confusing-arrow": "error",
+        "no-confusing-arrow": "off",
         "no-console": "off",
         "no-continue": "error",
         "no-div-regex": "error",

@@ -1,7 +1,29 @@
 new p5()
 
-var turtle,
+let turtle,
   commandCenter
+
+let startupMessage = (() => {
+  let bigMessage = `To get started, open Chrome developer tools:
+  On a Mac: command+option+i.
+  On a PC: control+shift+i.`
+
+  let smallMessage = `(Once you do that, type any turtle command to begin.)`
+
+  let display = () => {
+    textStyle(NORMAL)
+    textSize(20)
+    textAlign(CENTER)
+    stroke(255, 255, 255, 255)
+    fill(255, 255, 255, 255)
+    text(bigMessage, width/2, height/2)
+    textSize(12)
+    text(smallMessage, width/2, height/2 + 150)
+  }
+
+  return {display}
+
+})()
 
 var setup = () => {
   createCanvas(600, 500)
@@ -17,6 +39,8 @@ var setup = () => {
   turtle.render()
 
   console.log('Turtle ready!')
+
+  startupMessage.display()
 }
 
 var draw = () => {

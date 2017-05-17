@@ -6,9 +6,10 @@
     'libDir': './library',
 
     'modules': [
+      'util',
       'triangle-factory',
-      'path-factory',
-      'hud-factory',
+      'path-closure',
+      'hud-closure',
       'turtle',
       'turtleCommand',
       'listener-factory',

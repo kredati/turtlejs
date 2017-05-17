@@ -1,3 +1,13 @@
+/*
+  TODO:
+    [ ] Refactor pattern from class to factory
+    [ ] Prototype methods as function declarations, not object methods
+    [ ] Use a closure for prototype construction
+    [ ] Dectorate exported methods with argument type signature
+    [ ] Devise type signature system
+    [ ] Devise factory helper functions/framweork
+*/
+
 (turtlejs => { turtlejs.Turtle = class Turtle {
 
   constructor (x = 0, y = 0) {
@@ -86,7 +96,7 @@
   }
 
   pathColor (...args) {
-    this.path.setColor(color(...args))
+    this.path.setColor(...args)
 
     return this
   }
