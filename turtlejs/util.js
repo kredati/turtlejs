@@ -84,9 +84,6 @@
         failing = results.filter(result => !result.passing),
         errors
 
-      // console.log('Results: \n' + results.toString())
-      // console.log('Failing: \n' + failing.toString())
-
       if (failing.length) {
         errors = failing.reduce((message, res) => message.concat([
           `Argument ${res.position} should be a(n) ${sig[res.position]}.
