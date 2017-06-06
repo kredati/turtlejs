@@ -54,6 +54,14 @@
   let loadModule = composeLoader(turtlejs.moduleDir),
     loadLibraryItem = composeLoader(turtlejs.libDir)
 
+  let loadArray = (array, then) => {
+    let [next, ...remaining] = array
+
+    if (!next) return then()
+
+    loadModule(next, () => loadArray(remaining), loadingError)
+  }
+
   let loadModules = modules => {
     let [next, ...remaining] = modules
 
