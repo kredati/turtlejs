@@ -1,29 +1,27 @@
-/* eslint max-statements: ["error", 10, { "ignoreTopLevelFunctions": true }] */
-
-(t => {
+((t) => {
 
   let is = {}
 
-  is.function = prop => typeof prop === 'function'
+  is.function = (prop) => typeof prop === 'function'
 
-  is.object = prop => typeof prop === 'object'
+  is.object = (prop) => typeof prop === 'object'
 
-  is.string = prop => typeof prop === 'string'
+  is.string = (prop) => typeof prop === 'string'
 
-  is.number = prop => typeof prop === 'number'
+  is.number = (prop) => typeof prop === 'number'
 
-  is.boolean = prop => typeof prop === 'boolean'
+  is.boolean = (prop) => typeof prop === 'boolean'
 
-  is.undefined = prop => typeof prop === 'undefined'
+  is.undefined = (prop) => typeof prop === 'undefined'
 
-  is.array = prop => Array.isArray(prop)
+  is.array = (prop) => Array.isArray(prop)
 
-  is.null = prop => prop === null
+  is.null = (prop) => prop === null
 
-  is.primitive = prop =>
+  is.primitive = (prop) =>
     is.null(prop) ? true : !(is.function(prop) || is.object(prop))
 
-  is.any = prop => !is.undefined(prop)
+  is.any = (prop) => !is.undefined(prop)
 
   let after = (main, decorator) => (...args) => {
     decorator(main(...args))
@@ -37,9 +35,9 @@
   }
 
   let fluent = (fn, chainable) =>
-    after(fn, result => result ? result : chainable)
+    after(fn, (result) => result ? result : chainable)
 
-  let ownKeys = obj => Reflect.ownKeys(obj)
+  let ownKeys = (obj) => Reflect.ownKeys(obj)
 
   let pair = (key, value) => Object.defineProperty({}, key, {
     value,
@@ -48,19 +46,19 @@
 
   let add = (obj, key, value) => Object.assign(obj, pair(key, value))
 
-  let exports = obj => {
+  let exports = (obj) => {
     let methods = ownKeys(obj)
-      .filter(key => is.function(obj[key]))
+      .filter((key) => is.function(obj[key]))
       .reduce((methodExports, key) =>
         add(methodExports, key, fluent(obj[key], methodExports)), {})
 
     let objects = ownKeys(obj)
-      .filter(key => is.object(obj[key]))
+      .filter((key) => is.object(obj[key]))
       .reduce((objectExports, key) =>
         add(objectExports, key, obj[key]), {})
 
     let others = ownKeys(obj)
-      .filter(key => is.primitive(obj[key]))
+      .filter((key) => is.primitive(obj[key]))
 
     if (others.length < 0)
       throw Error(`Cannot export primitives: strings, numbers, and booleans.
@@ -81,7 +79,7 @@
 
     let compare = (args, sig) => {
       let results = compareSignature(args, sig),
-        failing = results.filter(result => !result.passing),
+        failing = results.filter((result) => !result.passing),
         errors
 
       if (failing.length) {
@@ -94,7 +92,7 @@
       return errors
     }
 
-    let check = fn => {
+    let check = (fn) => {
       let signature = signatures.get(fn)
 
       return (...args) => {

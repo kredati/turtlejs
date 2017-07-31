@@ -25,19 +25,14 @@ let startupMessage = (() => {
 
 })()
 
-const Turtle = require('./modules/turtle')
-const {TurtleCommandCenter} = require('./modules/turtleCommand')
-const language = require('./modules/language')
-const listener = require('./modules/listener-factory')
-
 var setup = () => {
   createCanvas(600, 500)
   background(0)
 
-  turtle = new Turtle(width/2, height/2)
-  commandCenter = new TurtleCommandCenter(turtle)
+  turtle = new turtlejs.Turtle(width/2, height/2)
+  commandCenter = new turtlejs.TurtleCommandCenter(turtle)
 
-  language.composeGlobalContext(commandCenter)
+  turtlejs.language.composeGlobalContext(commandCenter)
 
   console.log('Welcome to TurtleJS!\nFor help, type help() and press enter.')
 
